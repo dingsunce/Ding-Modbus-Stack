@@ -1,0 +1,50 @@
+project(lib_modbus)
+cmake_minimum_required(VERSION 3.15)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    if (MSVC)
+        #disable warning of Unannotated fallthrough between switch labels
+        add_compile_options(/wd26819)
+        #disable warning of deprecated function call
+        add_compile_options(/wd4996)
+        #disable warning of Prefer 'enum class' over 'enum
+        add_compile_options(/wd26812)
+        #disable warning of using NULL(0) as pointer
+        add_compile_options(/wd4047)
+        message("Windows MSVC Compiler")
+    endif ()
+endif ()
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if (GCC)
+        message("Linux GCC Compiler")
+    endif ()
+endif ()
+
+
+include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/Modbus)
+include_directories(${CMAKE_SOURCE_DIR}/OS/DING_OS)
+include_directories(${CMAKE_SOURCE_DIR}/OS/OSAL/non_preemptive_os)
+include_directories(${CMAKE_SOURCE_DIR}/Modbus/Platform/UnitTest)
+include_directories(${CMAKE_SOURCE_DIR}/App)
+include_directories(${CMAKE_SOURCE_DIR}/UnitTest/TestStub)
+
+
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/Modbus)
+add_subdirectory(${CMAKE_SOURCE_DIR}/OS/DING_OS)
+add_subdirectory(${CMAKE_SOURCE_DIR}/OS/OSAL/non_preemptive_os)
+add_subdirectory(${CMAKE_SOURCE_DIR}/App)
+add_subdirectory(${CMAKE_SOURCE_DIR}/UnitTest)
+
+
+
+
+
+
+
